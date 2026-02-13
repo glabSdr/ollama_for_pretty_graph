@@ -6,7 +6,8 @@ struct Prompt {
     model: String,
     system: Option<String>,
     prompt: String,
-    stream: bool
+    stream: bool,
+    format: Option<String>,
 }
 
 #[derive(Deserialize)]
@@ -15,13 +16,14 @@ struct ModelResponse {
 }
 
 
-pub fn execute_blocking(base_url: &str, model: String, system: Option<String>, prompt: String) -> String {
+pub fn execute_blocking(base_url: &str, model: String, system: Option<String>, prompt: String, format: Option<String>) -> String {
 
     let body = Prompt {
         model,
         system,
         prompt,
-        stream: false
+        stream: false,
+        format
     };
 
     let body = serde_json::to_string(&body).unwrap();

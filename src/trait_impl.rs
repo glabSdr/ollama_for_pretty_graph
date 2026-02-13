@@ -21,9 +21,19 @@ impl OllamaForPrettyGraph for Node {
         let model = self.get(MODEL_K).expect("Field model required for execution");
         let system = self.get(SYSTEM_K);
 
-        let resp = execute_blocking(&base_url, model, system, prompt.to_string());
+        let resp = execute_blocking(&base_url, model, system, prompt.to_string(), None);
         self.set(LAST_RAW_RESP, &resp);
     }
+
+    fn execute_blocking_with_custom_format(&self, prompt: &str, format: &str)  {
+        let base_url = self.get(BASE_URL_K).unwrap();
+        let model = self.get(MODEL_K).expect("Field model required for execution");
+        let system = self.get(SYSTEM_K);
+
+        let resp = execute_blocking(&base_url, model, system, prompt.to_string(), Some(format.to_string()));
+        self.set(LAST_RAW_RESP, &resp);
+    }
+
 
     fn resp(&self) -> String {
         self.get(LAST_RAW_RESP).unwrap()
@@ -53,6 +63,12 @@ mod tests {
         node.execute_blocking("test input");
     }
 
+
+    #[test]
+    fn test_empty_execute_blocking_with_custom_format() {
+        let node = Node::new_ollama_node(OLLAMA_DEFAULT_URL, "test");
+        node.execute_blocking_with_custom_format("test input", "format");
+    }
 
     #[test]
     fn test_execute_blocking() {

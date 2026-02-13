@@ -27,5 +27,15 @@ pub trait OllamaForPrettyGraph {
     /// node.execute_blocking("Hello!");
     /// println!({}, node.resp())
     /// ```
+    ///
+    ///
+    fn execute_blocking_with_custom_format(&self, input: &str, format: &str);
+    /// Get a string response
+    /// Example:
+    /// ```rust
+    /// let node = Node::new_ollama_node();
+    /// node.execute_blocking_with_custom_format("Hello!", "json");
+    /// println!({}, node.resp())
+    /// ```
     fn resp(&self) -> String;
 }
