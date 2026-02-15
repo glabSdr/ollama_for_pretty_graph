@@ -1,7 +1,8 @@
 use pretty_graph::Node;
 use crate::constants::{BASE_URL_K, LAST_RAW_RESP, MODEL_K, SYSTEM_K};
 use crate::execute::execute_blocking;
-use crate::traits::OllamaForPrettyGraph;
+use crate::config::Config;
+use crate::traits::{GetUsefulFields, OllamaForPrettyGraph};
 
 
 impl OllamaForPrettyGraph for Node {
@@ -15,25 +16,29 @@ impl OllamaForPrettyGraph for Node {
     fn set_system_prompt(&self, system: &str) {
         self.set(SYSTEM_K, system);
     }
-
     fn execute_blocking(&self, prompt: &str)  {
-        let base_url = self.get(BASE_URL_K).unwrap();
-        let model = self.get(MODEL_K).expect("Field model required for execution");
-        let system = self.get(SYSTEM_K);
+        let (base_url, model, system) = self.get_useful_fields();
+        let resp = execute_blocking(&base_url, model, system, prompt.to_string(), None, None);
+        self.set(LAST_RAW_RESP, &resp);
+    }
 
-        let resp = execute_blocking(&base_url, model, system, prompt.to_string(), None);
+    fn execute_blocking_with_config(&self, prompt: &str, config: Config)  {
+        let (base_url, model, system) = self.get_useful_fields();
+        let resp = execute_blocking(&base_url, model, system, prompt.to_string(), None, Some(config));
         self.set(LAST_RAW_RESP, &resp);
     }
 
     fn execute_blocking_with_custom_format(&self, prompt: &str, format: &str)  {
-        let base_url = self.get(BASE_URL_K).unwrap();
-        let model = self.get(MODEL_K).expect("Field model required for execution");
-        let system = self.get(SYSTEM_K);
-
-        let resp = execute_blocking(&base_url, model, system, prompt.to_string(), Some(format.to_string()));
+        let (base_url, model, system) = self.get_useful_fields();
+        let resp = execute_blocking(&base_url, model, system, prompt.to_string(), Some(format.to_string()), None);
         self.set(LAST_RAW_RESP, &resp);
     }
 
+    fn execute_blocking_with_custom_format_and_config(&self, prompt: &str, format: &str, config: Config)  {
+        let (base_url, model, system) = self.get_useful_fields();
+        let resp = execute_blocking(&base_url, model, system, prompt.to_string(), Some(format.to_string()), Some(config));
+        self.set(LAST_RAW_RESP, &resp);
+    }
 
     fn resp(&self) -> String {
         self.get(LAST_RAW_RESP).unwrap()
@@ -58,9 +63,15 @@ mod tests {
     }
 
     #[test]
-    fn test_empty_execute_blocking() {
+    fn test_execute_blocking() {
         let node = Node::new_ollama_node(OLLAMA_DEFAULT_URL, "test");
         node.execute_blocking("test input");
+    }
+
+    #[test]
+    fn test_execute_blocking_with_config() {
+        let node = Node::new_ollama_node(OLLAMA_DEFAULT_URL, "test");
+        node.execute_blocking_with_config("test input", Config::default());
     }
 
 
@@ -71,10 +82,9 @@ mod tests {
     }
 
     #[test]
-    fn test_execute_blocking() {
+    fn execute_blocking_with_custom_format_and_config() {
         let node = Node::new_ollama_node(OLLAMA_DEFAULT_URL, "test");
-
-        node.execute_blocking("hello");
+        node.execute_blocking_with_custom_format_and_config("test input", "json",  Config::default());
     }
 
     #[test]
@@ -89,5 +99,15 @@ mod tests {
         let node = Node::new_ollama_node(OLLAMA_DEFAULT_URL, "test");
         node.set(LAST_RAW_RESP, "ex");
         assert_eq!(node.resp(), "ex");
+    }
+}
+
+impl GetUsefulFields for Node {
+    fn get_useful_fields(&self) -> (String, String, Option<String>) {
+        let base_url = self.get(BASE_URL_K).unwrap();
+        let model = self.get(MODEL_K).expect("Field model required for execution");
+        let system = self.get(SYSTEM_K);
+
+        (base_url, model, system)
     }
 }

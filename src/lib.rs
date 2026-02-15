@@ -5,7 +5,8 @@ mod traits;
 mod execute;
 mod client;
 mod constants;
+mod config;
 
-pub use traits::*;
-pub use constants::OLLAMA_DEFAULT_URL;
+pub use traits::OllamaForPrettyGraph;
+pub use constants::{OLLAMA_DEFAULT_URL, OLLAMA_DEFAULT_PORT};
 

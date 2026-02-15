@@ -25,3 +25,4 @@ List:
 - base_url
 - system
 - last_raw_resp
+- format

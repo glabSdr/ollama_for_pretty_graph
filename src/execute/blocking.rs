@@ -1,5 +1,6 @@
 use serde::{Deserialize, Serialize};
 use crate::client::BLOCKING_CLIENT;
+use crate::config::Config;
 
 #[derive(Serialize)]
 struct Prompt {
@@ -8,6 +9,7 @@ struct Prompt {
     prompt: String,
     stream: bool,
     format: Option<String>,
+    config: Option<Config>,
 }
 
 #[derive(Deserialize)]
@@ -16,14 +18,15 @@ struct ModelResponse {
 }
 
 
-pub fn execute_blocking(base_url: &str, model: String, system: Option<String>, prompt: String, format: Option<String>) -> String {
+pub fn execute_blocking(base_url: &str, model: String, system: Option<String>, prompt: String, format: Option<String>, config: Option<Config>) -> String {
 
     let body = Prompt {
         model,
         system,
         prompt,
         stream: false,
-        format
+        format,
+        config,
     };
 
     let body = serde_json::to_string(&body).unwrap();
