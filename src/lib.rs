@@ -9,4 +9,4 @@ mod config;
 
 pub use traits::OllamaForPrettyGraph;
 pub use constants::{OLLAMA_DEFAULT_URL, OLLAMA_DEFAULT_PORT};
-
+pub use config::Config;
