@@ -1,38 +1,24 @@
-use serde::{Deserialize, Serialize};
-use crate::client::BLOCKING_CLIENT;
-use crate::config::Config;
-
-#[derive(Serialize)]
-struct Prompt {
-    model: String,
-    system: Option<String>,
-    prompt: String,
-    stream: bool,
-    format: Option<String>,
-    config: Option<Config>,
-}
-
-#[derive(Deserialize)]
-struct ModelResponse {
-    pub response: String
-}
-
+use crate::Config;
+use crate::private::client::BLOCKING_CLIENT;
+use crate::private::structs::{ModelResponse, Msg, Prompt};
 
 pub fn execute_blocking(base_url: &str, model: String, system: Option<String>, prompt: String, format: Option<String>, config: Option<Config>) -> String {
+    let mut messages = Vec::new();
+    if system.is_some() { messages.push(Msg::system(system.unwrap())); }
+    messages.push(Msg::user(prompt.clone()));
 
     let body = Prompt {
         model,
-        system,
-        prompt,
-        stream: false,
+        messages,
         format,
         config,
+        stream: false,
     };
 
     let body = serde_json::to_string(&body).unwrap();
 
     let res = BLOCKING_CLIENT
-        .post(format!("{}/api/generate", base_url))
+        .post(format!("{}/api/chat", base_url))
         .body(body)
         .send()
         .expect("Failed to send request to ollama")

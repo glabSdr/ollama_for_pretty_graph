@@ -1,4 +1,4 @@
-use crate::config::Config;
+use crate::Config;
 
 pub trait OllamaForPrettyGraph {
 
@@ -95,8 +95,4 @@ pub trait OllamaForPrettyGraph {
     /// println!({}, node.resp())
     /// ```
     fn resp(&self) -> String;
-}
-
-pub trait GetUsefulFields {
-    fn get_useful_fields(&self) -> (String, String, Option<String>);
 }

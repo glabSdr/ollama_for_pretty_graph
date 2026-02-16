@@ -1,8 +1,7 @@
 use pretty_graph::Node;
-use crate::constants::{BASE_URL_K, LAST_RAW_RESP, MODEL_K, SYSTEM_K};
-use crate::execute::execute_blocking;
-use crate::config::Config;
-use crate::traits::{GetUsefulFields, OllamaForPrettyGraph};
+use crate::private::constants::{BASE_URL_K, LAST_RAW_RESP, MODEL_K, SYSTEM_K};
+use crate::{Config, OllamaForPrettyGraph};
+use crate::private::{execute_blocking, GetUsefulFields};
 
 
 impl OllamaForPrettyGraph for Node {
@@ -47,7 +46,7 @@ impl OllamaForPrettyGraph for Node {
 
 #[cfg(test)]
 mod tests {
-    use crate::constants::OLLAMA_DEFAULT_URL;
+    use crate::OLLAMA_DEFAULT_URL;
     use super::*;
 
     #[test]
@@ -65,6 +64,13 @@ mod tests {
     #[test]
     fn test_execute_blocking() {
         let node = Node::new_ollama_node(OLLAMA_DEFAULT_URL, "test");
+        node.execute_blocking("test input");
+    }
+
+    #[test]
+    fn test_execute_blocking_with_system_set() {
+        let node = Node::new_ollama_node(OLLAMA_DEFAULT_URL, "test");
+        node.set_system_prompt("test system prompt");
         node.execute_blocking("test input");
     }
 
@@ -102,12 +108,3 @@ mod tests {
     }
 }
 
-impl GetUsefulFields for Node {
-    fn get_useful_fields(&self) -> (String, String, Option<String>) {
-        let base_url = self.get(BASE_URL_K).unwrap();
-        let model = self.get(MODEL_K).expect("Field model required for execution");
-        let system = self.get(SYSTEM_K);
-
-        (base_url, model, system)
-    }
-}

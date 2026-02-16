@@ -1,12 +1,6 @@
 #![doc = include_str!("../README.md")]
 
-mod trait_impl;
-mod traits;
-mod execute;
-mod client;
-mod constants;
-mod config;
+mod private;
+mod public;
 
-pub use traits::OllamaForPrettyGraph;
-pub use constants::{OLLAMA_DEFAULT_URL, OLLAMA_DEFAULT_PORT};
-pub use config::Config;
+pub use public::{Config, OllamaForPrettyGraph, OLLAMA_DEFAULT_PORT, OLLAMA_DEFAULT_URL};
