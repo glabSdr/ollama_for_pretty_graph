@@ -617,7 +617,7 @@ dependencies = [
 
 [[package]]
 name = "ollama_for_pretty_graph"
-version = "0.3.1"
+version = "0.3.2"
 dependencies = [
  "pretty_graph",
  "reqwest",

@@ -7,18 +7,21 @@ pub fn execute_blocking(base_url: &str, model: String, system: Option<String>, p
     if system.is_some() { messages.push(Msg::system(system.unwrap())); }
     messages.push(Msg::user(prompt.clone()));
 
+    let url = format!("{}/api/chat", base_url);
     let body = Prompt {
         model,
         messages,
         format,
-        config,
+        options: config,
         stream: false,
     };
 
+    
+    println!("Sending request to {url} with body: \n{:#?}", body);
     let body = serde_json::to_string(&body).unwrap();
 
     let res = BLOCKING_CLIENT
-        .post(format!("{}/api/chat", base_url))
+        .post(url)
         .body(body)
         .send()
         .expect("Failed to send request to ollama")

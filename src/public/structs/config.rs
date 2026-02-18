@@ -1,7 +1,7 @@
 use serde::Serialize;
 
 /// Extra configurations. Compatible with options in Ollama
-#[derive(Serialize)]
+#[derive(Debug, Serialize)]
 pub struct Config {
     pub seed: Option<i32>,
     pub temperature: f32,

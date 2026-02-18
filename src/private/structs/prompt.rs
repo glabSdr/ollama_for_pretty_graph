@@ -2,11 +2,11 @@ use serde::Serialize;
 use crate::Config;
 use crate::private::structs::Msg;
 
-#[derive(Serialize)]
+#[derive(Debug, Serialize)]
 pub struct Prompt {
     pub model: String,
     pub messages: Vec<Msg>,
     pub format: Option<String>,
-    pub config: Option<Config>,
+    pub options: Option<Config>,
     pub stream: bool
 }
