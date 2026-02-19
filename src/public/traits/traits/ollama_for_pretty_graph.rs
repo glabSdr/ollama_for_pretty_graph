@@ -2,10 +2,10 @@ use crate::Config;
 
 pub trait OllamaForPrettyGraph {
 
-    /// Create new node_extensions with ollama support
+    /// Create new node with ollama support
     /// Example:
     /// ```rust
-    /// let node_extensions = Node::new_ollama_node();
+    /// let node = Node::new_ollama_node();
     /// ```
     fn new_ollama_node(base_url: &str, model: &str) -> Self;
 
@@ -13,11 +13,11 @@ pub trait OllamaForPrettyGraph {
 
 
     /// Set system prompt.
-    /// System prompt will be sent with any user prompt which will be sent using this node_extensions
+    /// System prompt will be sent with any user prompt which will be sent using this node
     /// Example:
     /// ```rust
-    /// let node_extensions = Node::new_ollama_node();
-    /// node_extensions.set_system_prompt("some system prompt");
+    /// let node = Node::new_ollama_node();
+    /// node.set_system_prompt("some system prompt");
     /// ```
     fn set_system_prompt(&self, sp: &str);
 
