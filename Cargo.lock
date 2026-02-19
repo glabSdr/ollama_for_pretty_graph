@@ -617,7 +617,7 @@ dependencies = [
 
 [[package]]
 name = "ollama_for_pretty_graph"
-version = "0.3.4"
+version = "0.3.5"
 dependencies = [
  "pretty_graph",
  "reqwest",
@@ -675,9 +675,9 @@ dependencies = [
 
 [[package]]
 name = "pretty_graph"
-version = "0.8.0"
+version = "0.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8d9fb9a084f6072851b836d9583926f74bc9e513c0c78b45c4488c5f61c21e79"
+checksum = "af2f6d662e5529a5dc463eb281b661d644b234899dca11906c617e97b07afebc"
 
 [[package]]
 name = "proc-macro2"

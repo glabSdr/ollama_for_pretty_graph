@@ -2,10 +2,10 @@ use crate::Config;
 
 pub trait OllamaForPrettyGraph {
 
-    /// Create new node with ollama support
+    /// Create new node_extensions with ollama support
     /// Example:
     /// ```rust
-    /// let node = Node::new_ollama_node();
+    /// let node_extensions = Node::new_ollama_node();
     /// ```
     fn new_ollama_node(base_url: &str, model: &str) -> Self;
 
@@ -13,11 +13,11 @@ pub trait OllamaForPrettyGraph {
 
 
     /// Set system prompt.
-    /// System prompt will be sent with any user prompt which will be sent using this node
+    /// System prompt will be sent with any user prompt which will be sent using this node_extensions
     /// Example:
     /// ```rust
-    /// let node = Node::new_ollama_node();
-    /// node.set_system_prompt("some system prompt");
+    /// let node_extensions = Node::new_ollama_node();
+    /// node_extensions.set_system_prompt("some system prompt");
     /// ```
     fn set_system_prompt(&self, sp: &str);
 
@@ -50,25 +50,6 @@ pub trait OllamaForPrettyGraph {
     /// ```rust
     /// let node = Node::new_ollama_node();
     /// node.execute_blocking_with_custom_format("Hello!", "json");
-    /// println!({}, node.resp())
-    /// ```
-    ///
-    /// Or:
-    /// ```rust
-    /// let schema = "{
-    ///     "type": "object",
-    ///     "properties": {
-    ///       "name": {"type": "string"},
-    ///       "capital": {"type": "string"},
-    ///       "languages": {
-    ///         "type": "array",
-    ///         "items": {"type": "string"}
-    ///       }
-    ///     },
-    ///     "required": ["name", "capital", "languages"]
-    ///   }"
-    /// let node = Node::new_ollama_node();
-    /// node.execute_blocking_with_custom_format("Hello!", schema);
     /// println!({}, node.resp())
     /// ```
     fn execute_blocking_with_custom_format(&self, input: &str, format: &str);
