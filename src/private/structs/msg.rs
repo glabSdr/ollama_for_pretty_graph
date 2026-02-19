@@ -1,9 +1,9 @@
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Deserialize, Serialize)]
 pub struct Msg {
-    role: String,
-    content: String
+    pub role: String,
+    pub content: String
 }
 
 impl Msg {

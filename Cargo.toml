@@ -1,6 +1,6 @@
 [package]
 name = "ollama_for_pretty_graph"
-version = "0.3.3"
+version = "0.3.4"
 edition = "2024"
 license = "MIT"
 authors = ["Glab Strizhkov glabstrizhkov@gmail.com"]

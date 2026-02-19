@@ -17,8 +17,8 @@ pub fn execute_blocking(base_url: &str, model: String, system: Option<String>, p
     };
 
     
-    println!("Sending request to {url} with body: \n{:#?}", body);
     let body = serde_json::to_string(&body).unwrap();
+    println!("Sending request to {url} with body: \n{}", body);
 
     let res = BLOCKING_CLIENT
         .post(url)
@@ -28,7 +28,6 @@ pub fn execute_blocking(base_url: &str, model: String, system: Option<String>, p
         .text()
         .expect("Failed to read response body");
 
-
-    let map: ModelResponse = serde_json::from_str(&res).unwrap_or(ModelResponse { response: "".to_string() });
-    map.response
+    let map: ModelResponse = serde_json::from_str(&res).unwrap_or(ModelResponse { message: Msg { role: "user".to_string(), content: "".to_string() } });
+    map.message.content
 }

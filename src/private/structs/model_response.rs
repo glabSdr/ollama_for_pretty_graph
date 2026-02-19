@@ -1,6 +1,7 @@
 use serde::Deserialize;
+use crate::private::structs::Msg;
 
-#[derive(Deserialize)]
+#[derive(Debug, Deserialize)]
 pub struct ModelResponse {
-    pub response: String
+    pub message: Msg
 }
