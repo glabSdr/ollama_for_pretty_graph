@@ -16,7 +16,6 @@ impl Default for Config {
 
     /// Generates a default configuration. Fields can be manually modified if needed.
     /// Values:
-    /// ```
     /// seed: None,
     /// temperature: 0.7,
     /// top_p: 0.9,
@@ -24,7 +23,7 @@ impl Default for Config {
     /// top_k: 40,
     /// num_predict: None,
     /// stop: vec![]
-    /// ```
+    ///
     fn default() -> Self {
         Self {
             seed: None,
@@ -41,7 +40,7 @@ impl Default for Config {
 impl Config {
     /// Generates strict config for more accurate calculations.
     /// Values:
-    /// ```
+    ///
     /// seed: Some(42),
     /// temperature: 0.0,
     /// top_p: 0.9,
@@ -49,7 +48,7 @@ impl Config {
     /// top_k: 20,
     /// num_predict: None,
     /// stop: vec![]
-    /// ```
+    ///
     pub fn strict() -> Self {
         Self {
             seed: Some(42),
