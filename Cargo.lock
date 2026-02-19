@@ -675,9 +675,9 @@ dependencies = [
 
 [[package]]
 name = "pretty_graph"
-version = "0.9.0"
+version = "0.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "af2f6d662e5529a5dc463eb281b661d644b234899dca11906c617e97b07afebc"
+checksum = "c37908489682172caeafe2a08e2094d84910f936cdf2f85cbb79032fc9a444af"
 
 [[package]]
 name = "proc-macro2"
