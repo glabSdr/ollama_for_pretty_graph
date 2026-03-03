@@ -12,6 +12,10 @@ impl OllamaForPrettyGraph for Node {
         node
     }
 
+    fn switch_model(&self, model: &str) {
+        self.set(MODEL_K, model);
+    }
+
     fn set_system_prompt(&self, system: &str) {
         self.set(SYSTEM_K, system);
     }
@@ -52,8 +56,14 @@ mod tests {
     #[test]
     fn test_new_ollama_node() {
         let _ = Node::new_ollama_node(OLLAMA_DEFAULT_URL, "test");
-
     }
+
+    #[test]
+    fn test_switch_model() {
+        let node = Node::new_ollama_node(OLLAMA_DEFAULT_URL, "test");
+        node.switch_model("other_model");
+    }
+
 
     #[test]
     fn test_set_system_prompt() {

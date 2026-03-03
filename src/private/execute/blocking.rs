@@ -17,7 +17,7 @@ pub fn execute_blocking(base_url: &str, model: String, system: Option<String>, p
     };
 
     
-    let body = serde_json::to_string(&body).unwrap();
+    let body = serde_json::to_string_pretty(&body).unwrap();
     println!("Sending request to {url} with body: \n{}", body);
 
     let res = BLOCKING_CLIENT
