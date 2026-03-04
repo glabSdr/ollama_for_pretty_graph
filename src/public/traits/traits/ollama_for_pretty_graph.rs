@@ -19,12 +19,13 @@ pub trait OllamaForPrettyGraph {
     /// use ollama_for_pretty_graph::{OllamaForPrettyGraph, OLLAMA_DEFAULT_URL};
     ///
     /// let node = Node::new_ollama_node(OLLAMA_DEFAULT_URL, "model_name");
-    /// let node.switch_model("new_model_name");
+    /// node.switch_model("new_model_name");
     /// ```
     fn switch_model(&self, model: &str);
 
     /// Set system prompt.
     /// System prompt will be sent with any user prompt which will be sent using this node
+
     /// Example:
     /// ```rust
     /// use pretty_graph::Node;
